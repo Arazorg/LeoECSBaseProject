@@ -20,11 +20,9 @@ namespace _Scripts.ECS.Systems
             foreach (var i in _playerLevelFilter)
             {
                 ref var levelComponent = ref _playerLevelFilter.Get2(i);
-                ref var level = ref levelComponent.Level;
                 ref var experience = ref levelComponent.Experience;
-                ref var needLevelExperience = ref levelComponent.NeedLevelExperience;
-
-                if (experience >= needLevelExperience)
+                ref var requiredAmountExperience = ref levelComponent.RequiredAmountExperience;
+                if (experience >= requiredAmountExperience)
                 {
                     levelComponent.Level++;
                     SetNeedLevelExperience();
@@ -34,27 +32,30 @@ namespace _Scripts.ECS.Systems
 
         private void SetNeedLevelExperience()
         {
-            const int experienceForLevel = 10;
-            const float levelCoefficient = 1.1f;
             foreach (var i in _playerLevelFilter)
             {
                 ref var levelComponent = ref _playerLevelFilter.Get2(i);
-                levelComponent.NeedLevelExperience += (int)(experienceForLevel *
-                                                            Math.Pow(levelCoefficient, levelComponent.Level));
-                _previousNeedExperience += (int)(experienceForLevel *
-                                                 Math.Pow(levelCoefficient, levelComponent.Level - 1));
+                var experienceForLevel = levelComponent.ExperienceForLevel;
+                var levelCoefficient = levelComponent.LevelCoefficient;
+
+                levelComponent.RequiredAmountExperience += (int)(experienceForLevel *
+                                                                 Math.Pow(levelCoefficient, levelComponent.Level));
+
+                levelComponent.PreviousRequiredAmountExperience += (int)(experienceForLevel *
+                                                                         Math.Pow(levelCoefficient,
+                                                                             levelComponent.Level - 1));
             }
         }
-        
+
         private void SetStartValues()
         {
             foreach (var i in _playerLevelFilter)
             {
                 ref var levelComponent = ref _playerLevelFilter.Get2(i);
                 levelComponent.Level = 1;
-                _previousNeedExperience = 0;
+                levelComponent.PreviousRequiredAmountExperience = 0;
             }
-            
+
             SetNeedLevelExperience();
         }
     }
