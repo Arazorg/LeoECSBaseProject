@@ -47,7 +47,7 @@ namespace _Scripts.MonoBehaviours
                      Add(new GetDamageSystem()).
                      Add(new PlayVibrationSystem()).
                      Add(new EnemiesDeathSystem()).
-                     OneFrame<GetDamageComponent>().
+                     OneFrame<GetDamageOneFrame>().
                      OneFrame<PlayVibrationOneFrame>();
         }
 

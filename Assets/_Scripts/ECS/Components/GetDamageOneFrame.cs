@@ -3,7 +3,7 @@ using System;
 namespace _Scripts.ECS.Components
 {
     [Serializable]
-    public struct GetDamageComponent
+    public struct GetDamageOneFrame
     {
         public int Damage;
     }

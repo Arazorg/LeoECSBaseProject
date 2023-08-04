@@ -46,15 +46,15 @@ namespace _Scripts.ECS.Systems
                 ref var colliderComponent = ref _enemyColliderFilter.Get2(j);
                 if (colliderComponent.Collider == onCollisionEnterEvent.collider)
                 {
-                    AddGetDamageComponent(_enemyColliderFilter.GetEntity(j), damage);
+                    AddGetDamageOneFrame(_enemyColliderFilter.GetEntity(j), damage);
                     CreateVibrationEntity();
                 }
             }
         }
 
-        private void AddGetDamageComponent(EcsEntity entity, int damage)
+        private void AddGetDamageOneFrame(EcsEntity entity, int damage)
         {
-            entity.Get<GetDamageComponent>().Damage = damage;
+            entity.Get<GetDamageOneFrame>().Damage = damage;
         }
 
         private void CreateVibrationEntity()
