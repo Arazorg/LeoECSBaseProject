@@ -43,9 +43,11 @@ namespace _Scripts.MonoBehaviours
                      Add(new CharacterMovementInputSystem()).
                      Add(new EnemiesMovementInputSystem()).
                      Add(new MovementRigidbodySystem()).
-                     Add(new EnemiesGetDamageSystem(_world)).
+                     Add(new HandleEnemiesCollisionSystem(_world)).
+                     Add(new GetDamageSystem()).
                      Add(new PlayVibrationSystem()).
                      Add(new EnemiesDeathSystem()).
+                     OneFrame<GetDamageComponent>().
                      OneFrame<PlayVibrationOneFrame>();
         }
 
