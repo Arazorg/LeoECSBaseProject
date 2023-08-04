@@ -1,5 +1,6 @@
 using _Scripts.MonoBehaviours.Audio;
 using _Scripts.MonoBehaviours.Settings;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace _Scripts.MonoBehaviours
@@ -9,7 +10,7 @@ namespace _Scripts.MonoBehaviours
         [SerializeField] private SettingsInfo _settingsInfo;
         [SerializeField] private AudioManager _audioManager;
         [SerializeField] private ECSBoostrap _ecsBoostrap;
-        
+
         private void Awake()
         {
             _settingsInfo.Init();
