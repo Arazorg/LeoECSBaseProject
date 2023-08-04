@@ -1,6 +1,5 @@
 using _Scripts.ECS.Components;
 using _Scripts.ECS.Systems;
-using _Scripts.MonoBehaviours.UI;
 using LeoEcsPhysics;
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
@@ -12,7 +11,6 @@ namespace _Scripts.MonoBehaviours
     public class ECSBoostrap : MonoBehaviour
     {
         [SerializeField] private EcsUiEmitter _uiEmitter;
-        [SerializeField] private GameUI _gameUI;
 
         private EcsWorld _world;
         private EcsSystems _systems;
@@ -40,7 +38,7 @@ namespace _Scripts.MonoBehaviours
         {
             _systems.Add(new GameTimeSystem(_world)).
                      InjectUi(_uiEmitter).
-                     Add(new SetPauseSystem(_gameUI)).
+                     Add(new SetPauseSystem()).
                      Add(new SpawnEnemiesSystem()).
                      Add(new CharacterMovementInputSystem()).
                      Add(new EnemiesMovementInputSystem()).

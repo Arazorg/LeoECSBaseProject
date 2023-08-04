@@ -4,14 +4,22 @@ using Leopotam.Ecs;
 
 namespace _Scripts.ECS.Systems
 {
-    public class SetPauseSystem : IEcsSystem
+    public class SetPauseSystem : IEcsInitSystem, IEcsDestroySystem 
     {
-        private EcsFilter<PauseComponent> _pauseFilter = null;
-        private EcsFilter<AudioManagerComponent> _audioManagerFilter = null;
+        private EcsFilter<PauseComponent> _pauseFilter;
+        private EcsFilter<AudioManagerComponent> _audioManagerFilter;
+        private EcsFilter<GameUIComponent> _gameUIFilter;
 
-        public SetPauseSystem(GameUI gameUI)
+        private GameUI _gameUI;
+
+        public void Init()
         {
-            gameUI.OnSetPauseState += SetPauseState;
+            SetGameUI();
+        }
+
+        public void Destroy()
+        {
+            _gameUI.OnSetPauseState -= SetPauseState;
         }
 
         private void SetPauseState(bool state)
@@ -34,6 +42,16 @@ namespace _Scripts.ECS.Systems
                     audioManagerComponent.AudioManager.StopMusic();
                 else
                     audioManagerComponent.AudioManager.PlayMusic();
+            }
+        }
+        
+        private void SetGameUI()
+        {
+            foreach (var i in _gameUIFilter)
+            {
+                ref var gameUIComponent = ref _gameUIFilter.Get1(i);
+                _gameUI = gameUIComponent.GameUI;
+                _gameUI.OnSetPauseState += SetPauseState;
             }
         }
     }
